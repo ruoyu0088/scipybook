@@ -22,3 +22,6 @@ parts:
         - file: scipy-sparse-jp
         - file: scipy-ndimage-jp
         - file: scipy-spatial-jp
+    - caption: SymPy
+      chapters:
+        - file: sympy-intro-jp

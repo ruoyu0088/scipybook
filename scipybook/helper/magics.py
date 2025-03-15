@@ -54,3 +54,51 @@ def col(line):
     result = "\n".join(["".join(result[i:i+n])
         for i in range(0, len(result), n)])
     print(result)
+
+
+@register_line_magic
+def omit(line):
+    sh = InteractiveShell.instance()
+    import sys
+    pos = line.find(" ")
+    try:
+        count = int(line[:pos])
+        line = line[pos+1:]
+    except ValueError:
+        count = 4
+
+    lines = []
+    def write(s):
+        lines.append(s)
+
+    def flush():
+        pass
+
+    write.flush = flush
+
+    write.write = write
+    try:
+        old_stdout = sys.stdout
+        sys.stdout = write
+        result = sh.ev(line)
+    finally:
+        sys.stdout = old_stdout
+
+    if lines:
+        stdout = "".join(lines).split("\n")[:count]
+        indent = len(stdout[-1]) - len(stdout[-1].lstrip())
+        stdout.append(" "*indent + "...")
+        stdout_lines = "\n".join(stdout)
+        sys.stdout.write(stdout_lines)
+    if result:
+        print("\n".join(sh.display_formatter.formatters["text/plain"](result).split("\n")[:count]))
+        print("...")    
+
+
+@register_line_magic
+def latex(line):
+    from .sympy import display_sympy_latex
+    from IPython.core.interactiveshell import InteractiveShell
+    sh = InteractiveShell.instance()
+    expr = sh.ev(line)
+    display_sympy_latex(expr)            

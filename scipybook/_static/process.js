@@ -1,3 +1,55 @@
+function renderMath() {
+    function processNode(node) {
+        if (node.tagName === "PRE") return; // Skip <pre> elements
+
+        if (node.nodeType === Node.TEXT_NODE) {
+            let text = node.nodeValue;
+            if (!text.trim()) return;
+
+            let parts = [];
+            let lastIndex = 0;
+
+            // Match both inline ($...$) and display ($$...$$) math
+            text.replace(/\$\$(.*?)\$\$|\$(.*?)\$/gs, (match, displayMath, inlineMath, offset) => {
+                // Push normal text before match
+                if (offset > lastIndex) {
+                    parts.push(document.createTextNode(text.slice(lastIndex, offset)));
+                }
+
+                // Create math element
+                let mathElement = document.createElement(displayMath ? "div" : "span");
+                mathElement.className = "math";
+                mathElement.textContent = displayMath ? `\\[${displayMath}\\]` : `\\(${inlineMath}\\)`;
+                parts.push(mathElement);
+
+                lastIndex = offset + match.length;
+            });
+
+            // Push any remaining normal text
+            if (lastIndex < text.length) {
+                parts.push(document.createTextNode(text.slice(lastIndex)));
+            }
+
+            // Replace only if changes were made
+            if (parts.length > 0) {
+                let parent = node.parentNode;
+                parts.forEach((el) => parent.insertBefore(el, node));
+                parent.removeChild(node);
+            }
+        } else {
+            // Recursively process child nodes
+            Array.from(node.childNodes).forEach(processNode);
+        }
+    }
+
+    processNode(document.body);
+    MathJax.typeset();
+}
+
+document.addEventListener("DOMContentLoaded", renderMath);
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
     // ページ内のすべての <span> 要素を取得
     const spans = document.querySelectorAll('span.c1');
@@ -26,5 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
         nextDiv.style.display = 'none'; // Hide the next div
       }      
     }
-  });    
+  });
+  renderMath();
 });
