@@ -3,3 +3,4 @@ _build
 __pycache__
 tmp*.ipynb
 memo.md
+deepseek_api.ipynb
