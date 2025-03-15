@@ -1,0 +1,45 @@
+digraph g {
+ graph [fontname = "helvetica"];
+ node [fontname = "helvetica"];
+ edge [fontname = "helvetica"];
+     
+graph [
+rankdir = "LR"
+];
+node [
+fontsize = "16"
+shape = "ellipse"
+];
+edge [
+];
+ndarray [
+label = "<f0> ndarray header | <dtype> dtype | ndim: 2 | <dimensions> shape | <strides> strides | <data> data | flags: 0x505"
+shape = "record"
+];
+
+shape [
+label = "{<f0> 3 | 3}"
+shape = "record"
+];
+
+strides [
+label = "{<f0> 24 | 8}"
+shape = "record"
+];
+
+
+data [
+label = "{<f0> 1.0 | 2.0 | 3.0  | 4.0 | 5.0 | 6.0 | 7.0 | 8.0 | 9.0}"
+shape = "record"
+];
+
+dtype [
+label = float64
+shape = "record"
+];
+
+ndarray:data -> data:f0;
+ndarray:dtype -> dtype;
+ndarray:dimensions -> shape:f0;
+ndarray:strides -> strides;
+}

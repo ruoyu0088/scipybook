@@ -1,0 +1,38 @@
+# Book settings
+# Learn more at https://jupyterbook.org/customize/config.html
+
+title: Pythonで科学計算
+author: <a href="https://www.feng.co.jp" target="_blank">株式会社フォン</a>
+email: zhangry@feng.co.jp
+copyright: "2025"
+
+# Force re-execution of notebooks on each build.
+# See https://jupyterbook.org/content/execute.html
+execute:
+  execute_notebooks: off
+
+# Define the name of the latex output file for PDF builds
+latex:
+  latex_documents:
+    targetname: book.tex
+
+# Add a bibtex file so that we can create citations
+bibtex_bibfiles:
+  - references.bib
+
+repository:
+  url: https://github.com/ruoyu0088/scipybook
+  branch: master
+  path_to_book: polars_guide
+
+html:
+  use_repository_button: true
+  use_issues_button: true
+
+sphinx:
+  config:
+    site_url: "https://ruoyu0088.github.io/scipybook/"
+
+  extra_extensions:
+   - sphinxcontrib.mermaid
+   - sphinx_sitemap

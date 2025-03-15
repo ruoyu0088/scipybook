@@ -1,0 +1,5 @@
+.ipynb_checkpoints
+_build
+__pycache__
+tmp*.ipynb
+memo.md

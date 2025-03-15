@@ -1,0 +1,123 @@
+digraph g {
+ graph [fontname = "helvetica"];
+ node [fontname = "helvetica"];
+ edge [fontname = "helvetica"];
+
+graph [
+rankdir = "LR"
+];
+node [
+fontsize = "16"
+shape = "ellipse"
+];
+edge [
+];
+list1 [
+label = "<f0> list header| <data> ob_item"
+shape = "record"
+];
+    
+list1data [
+    label = "{<a> *| <b>  *|<c> *}"
+    shape = "record"
+];
+    
+list1:data -> list1data:a;
+
+list2 [
+label = "<f0> list header| <data> ob_item"
+shape = "record"
+];
+    
+list2data [
+    label = "{<a> *| <b>  *|<c> *}"
+    shape = "record"
+];
+    
+list2:data -> list2data:a;
+    
+list3 [
+label = "<f0> list header| <data> ob_item"
+shape = "record"
+];
+    
+list3data [
+    label = "{<a> *| <b>  *|<c> *}"
+    shape = "record"
+];
+    
+list3:data -> list3data:a;
+
+list4 [
+label = "<f0> list header| <data> ob_item"
+shape = "record"
+];
+    
+list4data [
+    label = "{<a> *| <b>  *|<c> *}"
+    shape = "record"
+];
+    
+list4:data -> list4data:a;
+    
+list1data:a -> list2:f0;
+list1data:b -> list3:f0;
+list1data:c -> list4:f0;
+    
+v1 [
+label = "<f0> float header| 1.0"
+shape = "record"
+];
+
+v2 [
+label = "<f0> float header| 2.0"
+shape = "record"
+];
+
+v3 [
+label = "<f0> float header| 3.0"
+shape = "record"
+];
+
+v4 [
+label = "<f0> float header| 4.0"
+shape = "record"
+];
+    
+v5 [
+label = "<f0> float header| 5.0"
+shape = "record"
+];
+
+v6 [
+label = "<f0> float header| 6.0"
+shape = "record"
+];
+    
+v7 [
+label = "<f0> float header| 7.0"
+shape = "record"
+];
+    
+v8 [
+label = "<f0> float header| 8.0"
+shape = "record"
+];
+    
+v9 [
+label = "<f0> float header| 9.0"
+shape = "record"
+];
+    
+list2data:a -> v1:f0;
+list2data:b -> v2:f0;
+list2data:c -> v3:f0;    
+
+list3data:a -> v4:f0;
+list3data:b -> v5:f0;
+list3data:c -> v6:f0;    
+
+list4data:a -> v7:f0;
+list4data:b -> v8:f0;
+list4data:c -> v9:f0;    
+}
