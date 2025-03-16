@@ -1,6 +1,9 @@
 .ipynb_checkpoints
 _build
+build
 __pycache__
 tmp*.ipynb
 memo.md
 deepseek_api.ipynb
+scipybook/julia.c
+scipybook/julia.dll
