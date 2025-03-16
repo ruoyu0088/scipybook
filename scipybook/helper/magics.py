@@ -1,4 +1,6 @@
+from pathlib import Path
 from IPython.core.magic import register_line_magic, register_cell_magic, register_line_cell_magic
+from IPython.core.magic_arguments import (argument, magic_arguments, parse_argstring)
 from IPython.core.interactiveshell import InteractiveShell
 from IPython.lib.pretty import pretty as _pretty
 
@@ -101,4 +103,47 @@ def latex(line):
     from IPython.core.interactiveshell import InteractiveShell
     sh = InteractiveShell.instance()
     expr = sh.ev(line)
-    display_sympy_latex(expr)            
+    display_sympy_latex(expr)
+
+
+def get_section(filepath, section):
+    import os
+    from os import path
+
+    section_mark = "###{}###".format(section)
+    lines = []
+    flag = False
+    if section == "0":
+        flag = True
+        
+    filepath = path.join(os.getcwd(), filepath)
+    
+    for line in open(filepath, encoding="utf-8"):
+        if not flag and line.startswith(section_mark):
+            flag = True
+            continue
+        if flag:
+            if line.startswith(section_mark):
+                break
+            lines.append(line)
+    return "".join(lines).rstrip()    
+
+
+@magic_arguments()
+@argument('path', help='the file path in scpy3 folder')
+@argument('section', help='the include section')
+@register_line_magic
+def include(line):
+    """
+    include section of the files in scpy2 folder
+    """
+    from IPython.display import display_markdown
+    args = parse_argstring(include, line)
+    filepath = args.path
+    section = args.section
+    code = get_section(filepath, section)
+    ext = filepath.split(".")[-1]
+    ext_to_language = {"py":"python", "c":"c", "h":"c", "pyx":"cython"}
+    markdown = f"```{ext_to_language[ext]}\n{code.rstrip()}\n```"
+    display_markdown(markdown, raw=True)
+    

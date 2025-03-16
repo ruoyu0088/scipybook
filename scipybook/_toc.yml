@@ -30,3 +30,4 @@ parts:
         - file: fastcode-intro-jp
         - file: cffi-intro-jp
         - file: cython-intro-jp
+        - file: cython-advanced-jp

@@ -25,3 +25,8 @@ fast_pdist.c
 fast_pdist*.pyd
 fast_pdist.pyx
 setup_fast_pdist.py
+peaks.c
+peaks.dll
+multisearch*.pyd
+vector.c
+vector*.pyd

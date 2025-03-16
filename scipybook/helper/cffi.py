@@ -190,3 +190,15 @@ def load_ipython_extension(ip):
     # """
     # display_javascript(js, raw=True)
     ip.register_magics(CffiMagic)
+
+
+class FuncAddr:
+    def __init__(self, name):
+        self.ffi = cffi.FFI()
+        self.lib = self.ffi.dlopen(name)
+        
+    def __getattr__(self, name):
+        if not hasattr(self.lib, name):
+            self.ffi.cdef(f'void {name}(void);')
+        addr = self.ffi.cast("size_t", self.ffi.addressof(self.lib, name))
+        return int(addr)         
