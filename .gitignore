@@ -21,3 +21,7 @@ iir*.pyd
 Release
 _fusion.c
 _fusion*.pyd
+fast_pdist.c
+fast_pdist*.pyd
+fast_pdist.pyx
+setup_fast_pdist.py

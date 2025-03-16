@@ -29,3 +29,4 @@ parts:
       chapters:
         - file: fastcode-intro-jp
         - file: cffi-intro-jp
+        - file: cython-intro-jp
