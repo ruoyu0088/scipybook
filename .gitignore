@@ -7,3 +7,17 @@ memo.md
 deepseek_api.ipynb
 scipybook/julia.c
 scipybook/julia.dll
+Fusion
+normal.c
+normal.h
+normal.dll
+normal*.pyd
+normal_math.c
+fusion.dll
+iir_filter.c
+iir.h
+iir.c
+iir*.pyd
+Release
+_fusion.c
+_fusion*.pyd

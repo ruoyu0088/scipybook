@@ -28,3 +28,4 @@ parts:
     - caption: 高速化
       chapters:
         - file: fastcode-intro-jp
+        - file: cffi-intro-jp
