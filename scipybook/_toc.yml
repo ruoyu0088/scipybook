@@ -31,3 +31,7 @@ parts:
         - file: cffi-intro-jp
         - file: cython-intro-jp
         - file: cython-advanced-jp
+        - file: numba-intro-jp
+    - caption: 可視化
+      chapters:
+        - file: matplotlib-intro-jp
