@@ -35,3 +35,4 @@ parts:
     - caption: 可視化
       chapters:
         - file: matplotlib-intro-jp
+        - file: matplotlib-plots-jp
