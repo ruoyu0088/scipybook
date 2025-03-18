@@ -1,6 +1,14 @@
 import inspect
+import re
+import textwrap
 from IPython.display import display_markdown     
 
+from numba.stencils import stencil
+
+source = inspect.getsource(stencil.StencilFunc.__call__)
+new_code = (re.sub(r"\.entry_point\(.+\)", "", source.replace("__call__", "_create")))
+new_code = textwrap.dedent(new_code)
+exec(new_code + '\nStencilFunc.create = _create\ndel _create', stencil.__dict__)
 
 def get_local_variables(func, sig):
     if isinstance(sig, int):
