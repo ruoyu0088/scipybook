@@ -36,3 +36,4 @@ parts:
       chapters:
         - file: matplotlib-intro-jp
         - file: matplotlib-plots-jp
+        - file: matplotlib-advanced-jp

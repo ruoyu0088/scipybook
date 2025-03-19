@@ -128,3 +128,19 @@ class GraphvizMatplotlib(Graphviz):
     
     expand_classes = {"Figure", "Axes", "Line2D", "Text"}
     expand_once_classes = {"XAxis", "YAxis",  "XTick", "YTick"}
+
+
+class GraphvizMPLTransform(Graphviz):
+
+    check_attributes = [
+        "_boxout", "_bbox", "_transform", "_points", "_mtx", "_boxin", "_child", "_x", "_y"]
+
+    expand_classes = {"TransformNode"}
+    expand_once_classes = {}
+
+    def format_ndarray(self, obj):
+        if obj.ndim == 2:
+            html = "".join("<tr>%s</tr>" % "".join(f"<td>{v}</td>" for v in row) for row in obj)
+            html = f'<table border="0">{html}</table>'
+        text = f'''obj_{id(obj)}[label=<{html}>,fillcolor=white, fontsize=9];'''
+        return text       
