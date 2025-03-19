@@ -79,5 +79,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }      
     }
   });
-  renderMath();
+
+  document.querySelectorAll(".plotly-graph-div").forEach(plotlyDiv => {
+    let grandparent = plotlyDiv.parentElement?.parentElement;
+    if (grandparent) {
+        let elementBefore = grandparent.previousElementSibling;
+        if (elementBefore) {
+            elementBefore.style.display = "none";
+        }
+    }
+});
+
+renderMath();
+
 });
