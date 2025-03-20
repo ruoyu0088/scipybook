@@ -38,3 +38,4 @@ parts:
         - file: matplotlib-intro-jp
         - file: matplotlib-plots-jp
         - file: matplotlib-advanced-jp
+        - file: bokeh-intro-jp

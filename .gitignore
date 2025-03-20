@@ -34,3 +34,6 @@ test.png
 todo
 sin_wave.mp4
 autowrap
+sincos.html
+sincos_freq.html
+bokeh_serve_demo.py

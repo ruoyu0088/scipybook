@@ -21,7 +21,7 @@ def isproperty(obj, attr):
 
 
 def trans(key):
-    return str(key).translate(None, string.punctuation)
+    return str(key).translate(string.punctuation)
 
 
 class Graphviz:
@@ -143,4 +143,16 @@ class GraphvizMPLTransform(Graphviz):
             html = "".join("<tr>%s</tr>" % "".join(f"<td>{v}</td>" for v in row) for row in obj)
             html = f'<table border="0">{html}</table>'
         text = f'''obj_{id(obj)}[label=<{html}>,fillcolor=white, fontsize=9];'''
-        return text       
+        return text  
+
+
+class GraphvizBokeh(Graphviz):
+    
+    check_attributes = [
+        "title", "", "x_range", "y_range", "x_scale", "y_scale", "formatter", "start", "end", "ticker", "tools",
+        "renderers", "xaxis", "yaxis", "glyph", "data_source", "data", "x", "y", "plot", "text", "toolbar", "left", 
+        "below", "line_color", "selection_glyph", "legend", "items", "nonselection_glyph", "grid"]
+    
+    expand_classes = {"figure", "Title", "GlyphRenderer", "ColumnDataSource"}
+    expand_once_classes = {"DataRange1d", "LinearScale", "Line", "LinearAxis", 
+                           "Range1d", "BasicTicker", "Toolbar", "Grid", "Legend", "Scatter"}   
