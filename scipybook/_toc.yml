@@ -25,6 +25,7 @@ parts:
     - caption: SymPy
       chapters:
         - file: sympy-intro-jp
+        - file: sympy-output-jp
     - caption: 高速化
       chapters:
         - file: fastcode-intro-jp
