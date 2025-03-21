@@ -32,5 +32,49 @@ Pythonは、インタプリタ型、オブジェクト指向、動的な高級�
 
 本書を通じて、読者がPythonを活用し、科学計算の実務に応用できる力を身につけることを目指しています。初心者から上級者まで、Pythonを用いた計算に興味のあるすべての方に役立つ一冊となれば幸いです。
 
+## Python環境のインストール
+
+科学計算のライブラリ管理には `conda` が広く利用されていますが、その軽量かつ高速な代替手段として `micromamba` があります。`micromamba` は C++ で実装されて、環境の作成やパッケージのインストールが迅速に行えることが特長です。単一のバイナリで動作するため、インストールが容易です。
+
+`micromamba` は `conda` との互換性を維持しつつ、高速かつ軽量な環境管理を実現する優れたツールです。特に、計算リソースを効率的に活用したい方や、軽量な環境構築を求める方にとって、有益な選択肢となることでしょう。また、一部のライブラリは `pip` のみで提供されている場合があるため、その際は `pip install` を用いて補完する必要があります。  
+
+### `micromamba` のインストール
+
+[micromambaの公式ページ](https://mamba.readthedocs.io/en/latest/installation.html) からWindows用のバイナリをダウンロードします。ダウンロードしたZIPファイルを適当なフォルダ（例: `C:\micromamba\`）に解凍します。
+
+[micromambaのリリースページ](https://github.com/mamba-org/micromamba-releases/releases)
+
+次に`C:\micromamba` をシステム環境変数の`PATH`に追加します。`cmd.exe`で次のコマンドで`micromamba`を初期化します。
+
+```cmd
+micromamba shell init -s cmd.exe -p C:\micromamba
+```
+
+### Python環境の作成
+
+Python環境を作成するには、コマンドプロンプトを再起動し、以下のコマンドを実行します。`-n myenv` は環境名を`myenv`に指定します。
+
+```cmd
+micromamba create -n myenv
+```
+
+作成した環境を有効化するには以下を実行します。
+
+```cmd
+micromamba activate myenv
+```
+
+環境がアクティブな状態で、次のコマンドで本書が提供する`requirements_conda.txt`中のすべてのライブラリをインストールします。
+
+```cmd
+micromamba install --file requirements_conda.txt 
+```
+
+本書は使う`graphviz`というライブラリは次のコマンドでインストールします。
+
+```cmd
+pip install graphviz
+```
+
 ```{tableofcontents}
 ```
