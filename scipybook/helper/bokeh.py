@@ -120,4 +120,57 @@ def widgets_demo():
     layout = row(column(select, create_button), layout_widget)
     create_button.js_on_click(callback)
     callback.args = dict(select=select, layout=layout_widget, arg_info=arg_info)
-    show(layout)                                     
+    show(layout)
+
+
+def get_glyph_properties(class_):
+    for name in sorted(class_.properties()):
+        if name not in ('js_event_callbacks', 'js_property_callbacks', 'name', 'tags', 'subscribed_events'):
+            yield name, getattr(class_, name)  
+
+def show_glyph_info(class_, detail_level=2):
+    import textwrap
+    import black
+    
+    for name, prop in get_glyph_properties(class_):
+        bars = '-' * (len(name) + 1)
+        type_text = black.format_str(str(prop.property), mode=black.FileMode())
+        type_name = prop.property.__class__.__name__
+        if detail_level == 1:
+            print(f'{name}: {type_name}')
+        elif detail_level == 2:
+            print(f'{name}: \n{bars}\n{type_text}')
+        elif detail_level == 3:
+            doc = prop.__doc__
+            if doc is None:
+                doc = '...'
+            doc = textwrap.indent(doc.strip(), ' '*4)
+            print(f'{name}: \n{bars}\n{type_text}\n\n{doc}\n')  
+
+
+def make_contours_data(X, Y, Z, levels=8):
+    import numpy as np
+    from skimage import measure
+    
+    if isinstance(levels, int):
+        levels = np.linspace(Z.min(), Z.max(), levels+2)[1:-1]
+
+    def concatenate_contours(contours):
+        nan_row = np.array([[np.nan, np.nan]])
+        arrays = []
+        for c in contours:
+            arrays.append(c)
+            arrays.append(nan_row)
+
+        return np.concatenate(arrays[:-1], axis=0)
+
+    contours = [concatenate_contours(measure.find_contours(Z, level)) for level in levels]
+
+    y_ptp = Y.ptp()
+    y_min = Y.min()
+    x_ptp = X.ptp()
+    x_min = X.min()
+    h, w = Z.shape
+    ys = [c[:, 0] / h * y_ptp + y_min for c in contours]
+    xs = [c[:, 1] / w * x_ptp + x_min for c in contours]
+    return dict(xs=xs, ys=ys, levels=levels)
