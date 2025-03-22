@@ -24,3 +24,4 @@ trame-vtk
 trame-vuetify
 ipywidgets
 imageio
+ipympl

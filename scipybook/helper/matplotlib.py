@@ -60,6 +60,7 @@ class ImageDrawer:
         self.height, self.width, _ = self.arr.shape
         
         renderer = RendererAgg(self.width, self.height, 90)
+        renderer.get_figure = lambda root=True:renderer
         img = mpl.image.BboxImage(renderer.bbox)
         img.set_data(arr)
         img.draw(renderer)
