@@ -18,8 +18,18 @@ def print_tree(p, last=True, header=''):
             print_tree(c, header=header + (blank if last else pipe), last=i == len(children) - 1)
 
 
-def print_subclasses(cls):
-    print_tree(class_tree(cls))
+def print_subclasses(cls, return_str=False):
+    if not return_str:
+        print_tree(class_tree(cls))
+    else:
+        import io
+        from contextlib import redirect_stdout
+
+        f = io.StringIO()
+        with redirect_stdout(f):
+            print_tree(class_tree(cls))
+            
+        return f.getvalue()
 
 
 def search_arguments(targets, search_name):
