@@ -26,3 +26,4 @@ ipywidgets
 imageio
 ipympl
 black
+bokeh_sampledata
