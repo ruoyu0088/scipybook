@@ -39,4 +39,5 @@ parts:
         - file: matplotlib-plots-jp
         - file: matplotlib-advanced-jp
         - file: bokeh-intro-jp
+        - file: bokeh-glyph-jp
         - file: panel-intro-jp

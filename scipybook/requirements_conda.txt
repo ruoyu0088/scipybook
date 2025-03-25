@@ -25,3 +25,4 @@ trame-vuetify
 ipywidgets
 imageio
 ipympl
+black

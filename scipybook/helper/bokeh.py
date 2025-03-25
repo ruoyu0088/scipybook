@@ -174,3 +174,36 @@ def make_contours_data(X, Y, Z, levels=8):
     ys = [c[:, 0] / h * y_ptp + y_min for c in contours]
     xs = [c[:, 1] / w * x_ptp + x_min for c in contours]
     return dict(xs=xs, ys=ys, levels=levels)
+
+
+def encode_image_cv(image, format="RGBA"):
+    import cv2
+    import base64
+    
+    if format != 'BGRA':
+        cvt_type = getattr(cv2, f'COLOR_{format}2BGRA')
+        image = cv2.cvtColor(image, cvt_type)
+        
+    _, imgdata = cv2.imencode(".jpg", image, (cv2.IMWRITE_JPEG_QUALITY, 80))
+    imgdata = imgdata.ravel()
+    url = "data:image/jpeg;base64," + base64.encodebytes(imgdata).decode()
+    return url
+
+def encode_image_pil(image):
+    import imageio
+    import base64
+    import io
+    buf = io.BytesIO()
+    if image.ndim == 3:
+        image = image[:, :, :3]
+
+    imageio.imwrite(buf, image, format="jpg", quality=80)
+    imgdata = buf.getvalue()
+    url = "data:image/jpeg;base64," + base64.encodebytes(imgdata).decode()
+    return url    
+
+def encode_image(image):
+    try:
+        return encode_image_pil(image)
+    except:
+        return encode_image_cv(image)      
