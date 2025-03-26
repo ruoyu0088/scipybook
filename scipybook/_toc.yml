@@ -41,4 +41,5 @@ parts:
         - file: bokeh-intro-jp
         - file: bokeh-glyph-jp
         - file: bokeh-javascript-jp
+        - file: holoviews-intro-jp
         - file: panel-intro-jp
