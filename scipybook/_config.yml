@@ -36,3 +36,6 @@ sphinx:
   extra_extensions:
    - sphinxcontrib.mermaid
    - sphinx_sitemap
+
+  local_extensions:
+    highlighter_fix: ./_ext
