@@ -43,3 +43,4 @@ parts:
         - file: bokeh-javascript-jp
         - file: holoviews-intro-jp
         - file: panel-intro-jp
+        - file: pyvista-dataset-jp
