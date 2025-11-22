@@ -11,6 +11,12 @@ parts:
         - file: numpy-ufunc-jp
         - file: numpy-index-jp
         - file: numpy-functions-jp
+    - caption: Awkward
+      chapters:
+        - file: awkward_intro
+        - file: awkward_types
+        - file: awkward_layout
+        - file: awkward_shape_change
     - caption: SciPy
       chapters:
         - file: scipy-optimize-jp
