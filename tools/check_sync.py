@@ -32,7 +32,7 @@ from pathlib import Path
 import nbformat
 
 ROOT = Path(__file__).resolve().parents[1]
-JA_DIR = ROOT / "scipybook" / "scipybook"
+JA_DIR = ROOT / "scipybook"
 ZH_DIR = ROOT / "scipybook_cn"
 STATE_PATH = ZH_DIR / ".sync_state.json"
 
