@@ -22,16 +22,18 @@ bibtex_bibfiles:
 
 repository:
   url: https://github.com/ruoyu0088/scipybook
-  branch: master
+  branch: main
   path_to_book: scipybook
 
 html:
   use_repository_button: true
   use_issues_button: true
 
+exclude_patterns: ["_0_contents.ipynb"]
+
 sphinx:
   config:
-    site_url: "https://ruoyu0088.github.io/scipybook/"
+    site_url: "https://ruoyu0088.github.io/scipybook/ja/"
 
   extra_extensions:
    - sphinxcontrib.mermaid
