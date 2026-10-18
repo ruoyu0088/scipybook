@@ -50,3 +50,4 @@ parts:
         - file: holoviews-intro-jp
         - file: panel-intro-jp
         - file: pyvista-dataset-jp
+        - file: pyvista-plot-jp
