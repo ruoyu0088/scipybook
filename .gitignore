@@ -38,4 +38,13 @@ sincos.html
 sincos_freq.html
 bokeh_serve_demo.py
 tools.ipynb
-tools
+pyrightconfig.json
+
+# 大きなデータ・自動生成物
+*.pcap
+.hist/
+fast_pdist_build.pyx
+fast_pdist_build.c
+_fusion_probe*.c
+*_probe*.c
+*.vtksz
