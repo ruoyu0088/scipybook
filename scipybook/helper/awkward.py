@@ -2,6 +2,38 @@ import awkward as ak
 import graphviz
 
 
+def unique(data, axis=1):
+    data_sorted = ak.sort(data, axis=axis)
+    lengths = ak.flatten(ak.run_lengths(data_sorted), axis=None)
+    grouped = ak.unflatten(data_sorted, lengths, axis=axis)
+    return grouped[..., 0]
+
+
+def all_fields(data_type, prefix=()):
+    if isinstance(data_type, ak.types.RecordType):
+        for name, field_type in zip(data_type.fields, data_type.contents):
+            yield from all_fields(field_type, prefix + (name,))
+
+    elif isinstance(data_type, (ak.types.ArrayType, ak.types.ListType)):
+        yield from all_fields(data_type.content, prefix)
+
+    else:
+        yield prefix
+
+
+def select_fields(data, *args, **kws):
+    selected = {}
+    fields = {}
+    for arg in args:
+        if isinstance(arg, str):
+            arg = arg,
+        fields['_'.join(arg)] = arg
+    fields = fields | kws
+    for name, field in fields.items():
+        selected[name] = data[field]
+    return ak.zip(selected, depth_limit=1)
+
+
 def layout_to_dot(array, name="awkward_layout"):
     """
     Generic Awkward layout → Graphviz DOT.
