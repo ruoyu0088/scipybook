@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+<script type="text/javascript" src="https://unpkg.com/vtk.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+
+<div class="content"></div>
+
+<script type="text/javascript">
+const base64Str = "%json_data%";
+const compressedData = Uint8Array.from(atob(base64Str), c => c.charCodeAt(0));
+const decompressed = pako.inflate(compressedData, { to: "string" });
+const data = JSON.parse(decompressed);
+
+var container = document.querySelector('.content');
+var fullScreenRenderer = vtk.Rendering.Misc.vtkFullScreenRenderWindow.newInstance({
+    background: [1, 1, 1],
+    rootContainer: container,
+    containerStyle: { height: '100%', width: '100%', position: 'absolute' },
+});
+var renderWindow = fullScreenRenderer.getRenderWindow();
+var syncCTX = vtk.Rendering.Misc.vtkSynchronizableRenderWindow.getSynchronizerContext();
+var syncRW = vtk.Rendering.Misc.vtkSynchronizableRenderWindow.decorate(renderWindow);
+syncCTX.setFetchArrayFunction((sha) =>
+    Promise.resolve(data.hashes[sha].content)
+);
+syncRW.synchronize(data.scene);
+syncRW.render();
+</script>
+
+<style>
+.absolute-div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 30px;
+  font-size: 9px;
+}
+</style>
+<div class="absolute-div">
+<b>(Alt) 1, 2, 3</b>: XYZ axis view, <b>P</b>: parallel projection, <b>R</b>: Reset Camera
+</div>
+<script>
+function axis_view(axis, direct){
+    console.log(axis, direct);
+    let camera = renderWindow.getRenderers()[1].getActiveCamera();
+    let [xf, yf, zf] = camera.getFocalPoint();
+    let [xc, yc, zc] = camera.getPosition();
+    let dist = Math.sqrt((xc - xf)**2 + (yc - yf)**2 + (zc - zf)**2);
+    switch(axis){
+        case "x":
+            camera.setPosition(xf + dist * direct, yf, zf);
+            camera.setViewUp(0, 0, 1);        
+            break;
+        case "y":
+            camera.setPosition(xf, yf + dist * direct, zf);
+            camera.setViewUp(0, 0, 1);
+            break;
+        case "z":
+            camera.setPosition(xf, yf, zf + dist * direct);
+            camera.setViewUp(0, 1, 0);
+            break;
+    }
+    renderWindow.render();   
+}
+
+function toggle_parallel_projection(){
+    let camera = renderWindow.getRenderers()[1].getActiveCamera();
+    camera.setParallelProjection(!camera.getParallelProjection());
+    renderWindow.render();
+}
+
+function reset_camera(){
+    let renderer = renderWindow.getRenderers()[1];
+    renderer.resetCamera();
+    renderWindow.render();
+}
+
+document.addEventListener('keyup', (e) => {
+    let direct = 1;
+    console.log(e);
+    switch(e.code){
+        case "Digit1":
+            direct = e.altKey?-1:1;
+            axis_view("x", direct);
+            break;
+        case "Digit2":
+            direct = e.altKey?-1:1;
+            axis_view("y", direct);
+            break;
+        case "Digit3":
+            direct = e.altKey?-1:1;
+            axis_view("z", direct);
+            break;
+        case "KeyP":
+            toggle_parallel_projection();
+            break;
+        case "KeyR":
+            reset_camera();
+            break;
+    }
+});
+</script>
+
+</body>
+</html>

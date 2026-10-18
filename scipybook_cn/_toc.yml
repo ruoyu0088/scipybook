@@ -1,0 +1,53 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: index
+
+parts:
+    - caption: NumPy
+      chapters:
+        - file: numpy-ndarray
+        - file: numpy-ufunc
+        - file: numpy-index
+        - file: numpy-functions
+    - caption: Awkward
+      chapters:
+        - file: awkward_intro
+        - file: awkward_types
+        - file: awkward_layout
+        - file: awkward_shape_change
+    - caption: SciPy
+      chapters:
+        - file: scipy-optimize
+        - file: scipy-linalg
+        - file: scipy-stats
+        - file: scipy-integrate
+        - file: scipy-signal
+        - file: scipy-interpolate
+        - file: scipy-sparse
+        - file: scipy-ndimage
+        - file: scipy-spatial
+    - caption: SymPy
+      chapters:
+        - file: sympy-intro
+        - file: sympy-output
+    - caption: 性能优化
+      chapters:
+        - file: fastcode-intro
+        - file: cffi-intro
+        - file: cython-intro
+        - file: cython-advanced
+        - file: numba-intro
+    - caption: 数据可视化
+      chapters:
+        - file: matplotlib-intro
+        - file: matplotlib-plots
+        - file: matplotlib-advanced
+        - file: bokeh-intro
+        - file: bokeh-glyph
+        - file: bokeh-javascript
+        - file: holoviews-intro
+        - file: panel-intro
+        - file: pyvista-dataset
+        - file: pyvista-plot

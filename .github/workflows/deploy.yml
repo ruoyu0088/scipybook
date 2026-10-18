@@ -35,21 +35,36 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      # Build the book
-      - name: Build the book
+      # 日本語版 → site/ja/
+      - name: Build Japanese book
         run: |
           jupyter-book build scipybook
 
-      # Copy a custom HTML file to the build folder
-      - name: Copy custom HTML to the build folder
+      # 中文版 → site/zh/（まだ無い場合はスキップ）
+      - name: Build Chinese book
+        if: ${{ hashFiles('scipybook_cn/_toc.yml') != '' }}
         run: |
-          cp google608cb34058acb7c0.html scipybook/_build/html/          
+          jupyter-book build scipybook_cn
+
+      # 1つのサイトにまとめる：/ に言語振り分け、/ja/ と /zh/ に各言語版
+      - name: Assemble site
+        run: |
+          set -e
+          rm -rf site
+          mkdir -p site/ja site/zh
+          cp -r scipybook/_build/html/. site/ja/
+          if [ -d scipybook_cn/_build/html ]; then
+            cp -r scipybook_cn/_build/html/. site/zh/
+          fi
+          cp index_redirect.html site/index.html
+          cp 404.html site/404.html
+          cp google608cb34058acb7c0.html site/
 
       # Upload the book's HTML as an artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "scipybook/_build/html"
+          path: "site"
 
       # Deploy the book's HTML to GitHub Pages
       - name: Deploy to GitHub Pages
