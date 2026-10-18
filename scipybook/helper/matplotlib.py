@@ -4,8 +4,11 @@ from functools import wraps
 import numpy as np
 import matplotlib as mpl
 
+# 図のラベルは日本語(将来は中国語)なので、使えるフォントを選んで設定する。
+# helper.fonts が言語(ja/zh)に合わせて rcParams を設定する。
+import helper.fonts
 
-plt.rcParams['font.family'] = "MS Gothic"
+helper.fonts.setup()
 
 def draw_grid(ax, grid, size=6, margin=0.02, fontsize=16):
     from matplotlib import pyplot as plt

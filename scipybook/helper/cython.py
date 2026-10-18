@@ -28,11 +28,14 @@ if not hasattr(CythonMagics, '_get_build_extension_original'):
     def _get_build_extension_fix(self, *args, **kwargs):
         build_extension = self._get_build_extension_original(*args, **kwargs)
         build_extension.compiler = 'mingw32'
-        # defines = ('MS_WIN64', 1)
-        # if build_extension.define is not None:
-        #     build_extension.define.append(defines)
-        # else:
-        #     build_extension.define = [defines]
+        # @cython.ufunc などは numpy/arrayobject.h を include するので、
+        # NumPy のヘッダーの場所を必ず渡す。
+        import numpy as np
+        inc = np.get_include()
+        dirs = list(build_extension.include_dirs or [])
+        if inc not in dirs:
+            dirs.append(inc)
+        build_extension.include_dirs = dirs
         return build_extension
 
     CythonMagics._get_build_extension = _get_build_extension_fix
