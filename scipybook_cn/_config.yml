@@ -32,6 +32,10 @@ html:
 sphinx:
   config:
     site_url: "https://ruoyu0088.github.io/scipybook/zh/"
+    sitemap_url_scheme: "{link}"
+    language: zh_CN
+    html_js_files:
+      - lang-switch.js
 
   extra_extensions:
    - sphinxcontrib.mermaid
