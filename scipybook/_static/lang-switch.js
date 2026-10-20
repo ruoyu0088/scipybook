@@ -1,6 +1,8 @@
-// 语言切换：在 /ja/ 和 /zh/ 的同一页面之间跳转
+// 语言切换：在 /ja/ 和 /zh/ 的同一页面之间跳转。
 // scipybook 的日文文件名带 -jp 后缀、中文版没有，所以要按后缀换算目标页，
 // 并准备几个候选（换不过去就退到对方语言的首页）。
+// 按钮插进文章标题行的按钮组（和源码仓库 / 下载 / 全屏图标同一排），
+// 不再用 position:fixed 浮在右上角，免得手机上遮住底下的按钮。
 (function () {
   var m = location.pathname.match(/^(.*\/)(ja|zh)\/(.*)$/);
   if (!m) return;
@@ -26,27 +28,25 @@
     return root + other + "/" + c;
   }
 
-  var a = document.createElement("a");
-  a.href = target(cands[0]);
-  a.textContent = other === "zh" ? "中文" : "日本語";
-  a.title = other === "zh" ? "切换到中文版" : "日本語版へ";
-  a.rel = "alternate";
-  a.hreflang = other;
-  a.style.cssText = [
-    "position:fixed", "top:10px", "right:14px", "z-index:9999",
-    "padding:3px 10px", "border:1px solid currentColor", "border-radius:4px",
-    "font-size:13px", "line-height:1.6", "text-decoration:none",
-    "opacity:.75", "background:var(--pst-color-background, transparent)"
-  ].join(";");
+  function makeButton() {
+    var a = document.createElement("a");
+    a.href = target(cands[0]);
+    a.textContent = other === "zh" ? "中文" : "日本語";
+    a.title = other === "zh" ? "切换到中文版" : "日本語版へ";
+    a.rel = "alternate";
+    a.hreflang = other;
+    a.className = "btn btn-sm lang-switch";
+    return a;
+  }
 
   // 对方语言没有这一页时（日文版有 legacy 页面），退到对方首页
-  function resolve(i) {
+  function resolve(a, i) {
     if (i >= cands.length - 1) return;
     fetch(target(cands[i]), { method: "HEAD" })
       .then(function (r) {
         if (!r.ok) {
           a.href = target(cands[i + 1]);
-          resolve(i + 1);
+          resolve(a, i + 1);
         }
       })
       .catch(function () {
@@ -54,8 +54,28 @@
       });
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    document.body.appendChild(a);
-    resolve(0);
-  });
+  function mount() {
+    var a = makeButton();
+
+    var row = document.querySelector(".article-header-buttons");
+    if (row) {
+      row.appendChild(a);
+    } else {
+      a.style.cssText = [
+        "position:fixed", "top:10px", "right:14px", "z-index:9999",
+        "padding:3px 10px", "border:1px solid currentColor", "border-radius:4px",
+        "font-size:13px", "line-height:1.6", "text-decoration:none",
+        "opacity:.75", "background:var(--pst-color-background, transparent)"
+      ].join(";");
+      document.body.appendChild(a);
+    }
+
+    resolve(a, 0);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mount);
+  } else {
+    mount();
+  }
 })();
