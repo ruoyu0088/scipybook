@@ -40,7 +40,7 @@ pre.mermaid{
     white-space: nowrap;
 }
 
-/* Panel / Bokeh 的输出在暗色主题下的文字颜色
+/* Panel / Bokeh 输出在暗色主题下的配色：跟正文一样，透明底 + 浅色字
  *
  * pydata-sphinx-theme 在暗色主题下把所有 HTML 输出当成“浅底深字”的卡片来上色：
  *   html[data-theme=dark] .bd-content div.cell_output .text_html {
@@ -52,21 +52,18 @@ pre.mermaid{
  *   --background-text-color: var(--pst-color-text-base)
  * 于是暗色主题下部件文字也变成 #ced6dd，与卡片底色相同，字就看不见了
  * （panel-intro 的滑块标题、holoviews 的下拉框都是这样）。
- * <select> 这类原生控件的 color-scheme 也还是 dark，会出现白底白字。
  *
- * 修法：在这个浅色卡片范围内把 pst 的颜色变量反过来用（浅底 + 深字），
- * 并让原生控件按浅色绘制。custom property 会继承进 shadow DOM，所以对
- * Bokeh 的部件同样生效；亮色主题不受影响。
- * 选择器带上 :not(:has(table.dataframe))，是为了和主题的选择器保持同样的
- * 特异性，靠 style.css 在后面加载这一点来覆盖它（dataframe 仍然用主题的配色）。
+ * 修法：不要浅色卡片，改成透明底，让输出直接跟随暗色主题（黑底浅字）。
+ * custom property 会继承进 shadow DOM，所以部件文字、输入框底色都跟着走；
+ * <select> 等原生控件用 color-scheme: light 绘制，否则会白底白字。
+ * 亮色主题不受影响。选择器带上 :not(:has(table.dataframe)) 是为了和主题的
+ * 选择器保持同样的特异性，靠 style.css 在后面加载这一点覆盖它。
  */
 html[data-theme="dark"] .bd-content div.cell_output .text_html:not(:has(table.dataframe)) {
-    --book-output-bg: #ced6dd;
-    --book-output-fg: #222832;
+    background-color: transparent;
+    color: var(--pst-color-text-base);
     color-scheme: light;
-    background-color: var(--book-output-bg);
-    color: var(--book-output-fg);
-    --pst-color-text-base: var(--book-output-fg);
-    --pst-color-background: var(--book-output-bg);
-    --pst-color-surface: #c6cfd8;
+    --pst-color-text-base: #ced6dd;
+    --pst-color-background: #29313d;
+    --pst-color-surface: #29313d;
 }

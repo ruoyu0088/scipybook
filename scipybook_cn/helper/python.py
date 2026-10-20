@@ -5,31 +5,41 @@ def class_tree(cls):
     return { cls.__name__: [class_tree(sub_class) for sub_class in cls.__subclasses__()] }
 
 
-def print_tree(p, last=True, header=''):
+def tree_lines(p, last=True, header=''):
     elbow = "└──"
     pipe = "│  "
     tee = "├──"
     blank = "   "
     name = list(p.keys())[0]
-    print(header + (elbow if last else tee) + name)
-    if p[name]:
-        children = p[name]
-        for i, c in enumerate(children):
-            print_tree(c, header=header + (blank if last else pipe), last=i == len(children) - 1)
+    lines = [header + (elbow if last else tee) + name]
+    children = p[name]
+    for i, c in enumerate(children):
+        lines.extend(tree_lines(c, header=header + (blank if last else pipe),
+                                last=i == len(children) - 1))
+    return lines
 
 
-def print_subclasses(cls, return_str=False):
-    if not return_str:
-        print_tree(class_tree(cls))
-    else:
-        import io
-        from contextlib import redirect_stdout
+def print_tree(p, last=True, header=''):
+    print("\n".join(tree_lines(p, last=last, header=header)))
 
-        f = io.StringIO()
-        with redirect_stdout(f):
-            print_tree(class_tree(cls))
-            
-        return f.getvalue()
+
+def print_subclasses(cls, return_str=False, as_html=False, height=300):
+    """显示 cls 的继承树。
+
+    as_html=True 时返回 IPython.display.HTML：等宽的 <pre>，超过 height 像素就纵向滚动，
+    比 TextAreaInput 省地方，颜色跟随主题。return_str=True 时返回字符串。
+    """
+    text = "\n".join(tree_lines(class_tree(cls)))
+    if as_html:
+        from html import escape
+        from IPython.display import HTML
+
+        style = (f"max-height:{height}px; margin:0; overflow:auto; "
+                 "white-space:pre; tab-size:4;")
+        return HTML(f'<pre style="{style}">{escape(text)}</pre>')
+    if return_str:
+        return text + "\n"
+    print(text)
 
 
 def search_arguments(targets, search_name):
