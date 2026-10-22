@@ -7,10 +7,10 @@ root: index
 parts:
     - caption: NumPy
       chapters:
-        - file: numpy-ndarray-jp
-        - file: numpy-ufunc-jp
-        - file: numpy-index-jp
-        - file: numpy-functions-jp
+        - file: numpy-ndarray
+        - file: numpy-ufunc
+        - file: numpy-index
+        - file: numpy-functions
     - caption: Awkward
       chapters:
         - file: awkward_intro
@@ -19,35 +19,35 @@ parts:
         - file: awkward_shape_change
     - caption: SciPy
       chapters:
-        - file: scipy-optimize-jp
-        - file: scipy-linalg-jp
-        - file: scipy-stats-jp
-        - file: scipy-integrate-jp
-        - file: scipy-signal-jp
-        - file: scipy-interpolate-jp
-        - file: scipy-sparse-jp
-        - file: scipy-ndimage-jp
-        - file: scipy-spatial-jp
+        - file: scipy-optimize
+        - file: scipy-linalg
+        - file: scipy-stats
+        - file: scipy-integrate
+        - file: scipy-signal
+        - file: scipy-interpolate
+        - file: scipy-sparse
+        - file: scipy-ndimage
+        - file: scipy-spatial
     - caption: SymPy
       chapters:
-        - file: sympy-intro-jp
-        - file: sympy-output-jp
+        - file: sympy-intro
+        - file: sympy-output
     - caption: 高速化
       chapters:
-        - file: fastcode-intro-jp
-        - file: cffi-intro-jp
-        - file: cython-intro-jp
-        - file: cython-advanced-jp
-        - file: numba-intro-jp
+        - file: fastcode-intro
+        - file: cffi-intro
+        - file: cython-intro
+        - file: cython-advanced
+        - file: numba-intro
     - caption: 可視化
       chapters:
-        - file: matplotlib-intro-jp
-        - file: matplotlib-plots-jp
-        - file: matplotlib-advanced-jp
-        - file: bokeh-intro-jp
-        - file: bokeh-glyph-jp
-        - file: bokeh-javascript-jp
-        - file: holoviews-intro-jp
-        - file: panel-intro-jp
-        - file: pyvista-dataset-jp
-        - file: pyvista-plot-jp
+        - file: matplotlib-intro
+        - file: matplotlib-plots
+        - file: matplotlib-advanced
+        - file: bokeh-intro
+        - file: bokeh-glyph
+        - file: bokeh-javascript
+        - file: holoviews-intro
+        - file: panel-intro
+        - file: pyvista-dataset
+        - file: pyvista-plot
