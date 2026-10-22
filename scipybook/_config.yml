@@ -29,8 +29,6 @@ html:
   use_repository_button: true
   use_issues_button: true
 
-exclude_patterns: ["_0_contents.ipynb"]
-
 sphinx:
   config:
     site_url: "https://ruoyu0088.github.io/scipybook/ja/"
