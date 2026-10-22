@@ -57,3 +57,8 @@ scipybook/Velodyne-VLP-data.ipynb
 scipybook/tvtk_mayavi-500-tvtk-examples.ipynb
 scipybook/images/lidar.png
 scipybook/images/velodyne_lidar_format2.png
+
+# 本地润色工作流：工具、交接文档不入库
+/tools/
+/AGENTS.md
+/STYLE_HANDOFF.md
