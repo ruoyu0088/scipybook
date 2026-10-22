@@ -50,11 +50,8 @@ _fusion_probe*.c
 *.vtksz
 
 # 本に入れていない草稿・データ
-scipybook/01-lidar*.ipynb
+/_drafts/
 scipybook/01-lidar*.txt
-scipybook/03-holoviews-container-dynamicmap*.ipynb
-scipybook/Velodyne-VLP-data.ipynb
-scipybook/tvtk_mayavi-500-tvtk-examples.ipynb
 scipybook/images/lidar.png
 scipybook/images/velodyne_lidar_format2.png
 
