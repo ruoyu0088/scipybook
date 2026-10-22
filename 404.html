@@ -9,6 +9,14 @@
   var parts = location.pathname.split("/").filter(Boolean);
   var site = "/" + (parts[0] || "") + "/";
   var rest = location.pathname.slice(site.length);
+
+  // 改名前的 -jp ページ → 去掉后缀的新页面（日文/中文都适用）
+  var legacy = rest.match(/^(?:(ja|zh)\/)?(.+)-jp\.html$/);
+  if (legacy) {
+    location.replace(site + (legacy[1] || "ja") + "/" + legacy[2] + ".html");
+    return;
+  }
+
   if (!/^(ja|zh)\//.test(rest)) {
     location.replace(site + "ja/" + rest);
   }
